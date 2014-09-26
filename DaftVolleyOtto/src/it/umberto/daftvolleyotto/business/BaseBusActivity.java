@@ -1,6 +1,5 @@
 package it.umberto.daftvolleyotto.business;
 
-import it.umberto.daftvolleyotto.FragmentDownloaderResult;
 import android.app.Activity;
 
 

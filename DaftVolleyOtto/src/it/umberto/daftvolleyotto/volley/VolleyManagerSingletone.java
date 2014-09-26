@@ -27,6 +27,7 @@ public class VolleyManagerSingletone {
     private static Context mCtx;
     
     
+    
     public static synchronized VolleyManagerSingletone getInstance(Context context) 
     {
 		if (mInstance == null)

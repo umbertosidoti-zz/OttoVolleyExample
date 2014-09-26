@@ -3,9 +3,11 @@ package it.umberto.daftvolleyotto;
 import com.squareup.otto.Subscribe;
 
 import it.umberto.daftvolleyotto.business.BaseBusActivity;
+import it.umberto.daftvolleyotto.business.FragmentDownloaderResult;
 import it.umberto.daftvolleyotto.business.RetainFragmentDownloader;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +20,7 @@ public class MainActivity extends BaseBusActivity
 
 	private RetainFragmentDownloader fragmentDownloader;
 	public static final String TAG_DOWNLOADER="FragmentDownloaderTag";
-	private static final String URL_DEMO="http://www.test.it";
+	private static final String URL_DEMO="https://api.daft.com/v2/json/search_sale?parameters={“api_key”:”261cb47575e84ab5d29356ad2818ac21a20b1f4f”,”query”:{“perpage”:50}}";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -55,7 +57,12 @@ public class MainActivity extends BaseBusActivity
 	@Subscribe
 	public void onDownloaderDataReceived(FragmentDownloaderResult event)
 	{
-		
+		if(event.getResult()==FragmentDownloaderResult.RESULT_OK)
+		{
+			Intent intent= new Intent(this, ListActivity.class);
+			intent.putExtra(ListActivity.BUNDLE_EXTRA_PROPERTIES, event.getProperties());
+			startActivity(intent);			
+		}		
 	}
 	
 }

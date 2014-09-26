@@ -4,5 +4,12 @@
     <string name="app_name">DaftVolleyOtto</string>
     <string name="hello_world">Hello world!</string>
     <string name="start_button">GOO!!!</string>
-
+    <color name="genre">#666666</color>
+    <color name="year">#888888</color>
+    <color name="list_divider">#d9d9d9</color>
+    <color name="list_row_start_color">#ffffff</color>
+    <color name="list_row_end_color">#ffffff</color>
+    <color name="list_row_hover_start_color">#ebeef0</color>
+    <color name="list_row_hover_end_color">#ebeef0</color>
+    <dimen name="title">17dp</dimen>
 </resources>
