@@ -3,13 +3,15 @@
 
     <string name="app_name">DaftVolleyOtto</string>
     <string name="hello_world">Hello world!</string>
-    <string name="start_button">GOO!!!</string>
-    <color name="genre">#666666</color>
-    <color name="year">#888888</color>
+    <string name="force_button">FORCE</string>
+    <string name="cache_button">SHOW_CACHED</string>  
     <color name="list_divider">#d9d9d9</color>
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
+    <color name="StartColor_button">#2753CC</color>
+    <color name="EndColor_button">#8DA8F2</color>    
+    <color name="NiceButtonBorderColor">#254117</color>    
     <dimen name="title">17dp</dimen>
 </resources>

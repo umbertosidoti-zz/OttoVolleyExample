@@ -22,7 +22,8 @@ public abstract class RetainFragmentDownloader extends Fragment
 	protected int state;
 	//private IFragmentListener mCallbacks;
 
-	public abstract void downloadJsonObject(String url);
+	public abstract void forceDownloadJson(String url);
+	public abstract void downloadJson(String url);
 
 		
 	@Override

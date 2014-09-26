@@ -39,11 +39,27 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	}
 
 	@Override
-	public void downloadJsonObject(String url) 
+	public void forceDownloadJson(String url) 
 	{
 		state=STATE_PROGRESS;
 		downloadJsonData(url);
 	}	
+	
+	@Override
+	public void downloadJson(String url)
+	{
+		state=STATE_PROGRESS;
+		if(properties!=null)
+		{
+			state=STATE_FINSHED;
+			FragmentDownloaderResult resultObj = new FragmentDownloaderResult(properties);
+			SingletoneBus.getInstance().post(resultObj);
+		}
+		else
+		{
+			downloadJsonData(url);
+		}
+	}
 	
 	
 	private void downloadJsonData(String url)
@@ -120,8 +136,9 @@ public class FragmentDownloader extends RetainFragmentDownloader
 
 	private void dowloadFinished()
 	{
-		 FragmentDownloaderResult resultObj = new FragmentDownloaderResult(properties);
-		 SingletoneBus.getInstance().post(resultObj);
+		state=STATE_FINSHED;
+		FragmentDownloaderResult resultObj = new FragmentDownloaderResult(properties);
+		SingletoneBus.getInstance().post(resultObj);
 	}
 	
 	@Override
@@ -131,6 +148,8 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		VolleyManagerSingletone.getInstance(getActivity().getApplicationContext()).cancelPendingRequests(VolleyManagerSingletone.TAG);
 		
 	}
+
+	
 	
 
 }

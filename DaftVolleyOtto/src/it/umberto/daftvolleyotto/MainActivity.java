@@ -29,16 +29,30 @@ public class MainActivity extends BaseBusActivity
 		setContentView(R.layout.activity_main);	
 		
 		
-		Button buttonStart=(Button) findViewById(R.id.buttonStart);
-		buttonStart.setOnClickListener(new OnClickListener() 
+		Button buttonForce=(Button) findViewById(R.id.buttonForce);
+		buttonForce.setOnClickListener(new OnClickListener() 
 		{
 			
 			@Override
 			public void onClick(View arg0) 
 			{
-				if((fragmentDownloader!=null)&&(fragmentDownloader.getState()==RetainFragmentDownloader.STATE_INIT))
+				if(fragmentDownloader!=null)
 				{
-					fragmentDownloader.downloadJsonObject(URL_DEMO);
+					fragmentDownloader.forceDownloadJson(URL_DEMO);
+				}
+			}
+		});		
+		
+		Button buttonCache=(Button) findViewById(R.id.buttonCache);
+		buttonCache.setOnClickListener(new OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View arg0) 
+			{
+				if(fragmentDownloader!=null)
+				{
+					fragmentDownloader.downloadJson(URL_DEMO);
 				}
 			}
 		});		
@@ -57,6 +71,12 @@ public class MainActivity extends BaseBusActivity
 	@Subscribe
 	public void onDownloaderDataReceived(FragmentDownloaderResult event)
 	{
+		FragmentManager fm = getFragmentManager();
+		fragmentDownloader = (RetainFragmentDownloader) fm.findFragmentByTag(TAG_DOWNLOADER);
+
+		if (fragmentDownloader == null) 
+			fragmentDownloader.setState(RetainFragmentDownloader.STATE_DELIVERED);		
+		
 		if(event.getResult()==FragmentDownloaderResult.RESULT_OK)
 		{
 			Intent intent= new Intent(this, ListActivity.class);
