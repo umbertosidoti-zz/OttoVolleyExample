@@ -10,8 +10,9 @@
     <color name="list_row_end_color">#ffffff</color>
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
-    <color name="StartColor_button">#2753CC</color>
-    <color name="EndColor_button">#8DA8F2</color>    
-    <color name="NiceButtonBorderColor">#254117</color>    
+    <color name="StartColor_button">#FD974E</color>
+    <color name="EndColor_button">#FF800B</color>    
+   	<color name="BackActivity">#F6F6F6</color> 
+   	<color name="BlueBase">#193276</color>   
     <dimen name="title">17dp</dimen>
 </resources>

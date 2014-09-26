@@ -14,10 +14,7 @@ import android.os.Bundle;
  */
 public abstract class RetainFragmentDownloader extends Fragment
 {
-	public static final int STATE_INIT=0;
-	public static final int STATE_PROGRESS=1;
-	public static final int STATE_FINSHED=2;
-	public static final int STATE_DELIVERED=3;
+	
 	
 	protected int state;
 	//private IFragmentListener mCallbacks;

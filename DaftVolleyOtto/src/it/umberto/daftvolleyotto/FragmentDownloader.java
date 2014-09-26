@@ -17,6 +17,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.app.Activity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import it.umberto.daftvolleyotto.business.FragmentDownloaderResult;
 import it.umberto.daftvolleyotto.business.RetainFragmentDownloader;
 import it.umberto.daftvolleyotto.business.SaleProperty;
@@ -29,13 +33,20 @@ import it.umberto.daftvolleyotto.volley.VolleyManagerSingletone;
  */
 public class FragmentDownloader extends RetainFragmentDownloader 
 {
+	public static final int STATE_INIT=0;
+	public static final int STATE_PROGRESS=1;
+	public static final int STATE_FINSHED=2;
+	public static final int STATE_DELIVERED=3;
+	
 	private  ArrayList<SaleProperty> properties;
 
 	@Override
-	public void onAttach(Activity activity) 
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
 	{
-		super.onAttach(activity);
+		// TODO Auto-generated method stub
 		state=STATE_INIT;
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
