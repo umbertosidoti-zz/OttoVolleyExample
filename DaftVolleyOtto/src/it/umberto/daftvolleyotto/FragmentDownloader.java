@@ -29,7 +29,6 @@ import it.umberto.daftvolleyotto.volley.VolleyManagerSingletone;
  */
 public class FragmentDownloader extends RetainFragmentDownloader 
 {
-		
 	private  ArrayList<SaleProperty> properties;
 
 	@Override
@@ -54,7 +53,9 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		        @Override
 		        public void onResponse(JSONObject response)
 		        {
-		        	parseJsonObject(response);
+		        	properties=parseJsonObject(response);
+		        	dowloadFinished();
+		        	
 		        }
 		    },
 		    new Response.ErrorListener() {
@@ -77,18 +78,33 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	{
 		ArrayList<SaleProperty> listProp = new ArrayList<SaleProperty>();
 		
-        for (int i = 0; i < response.length(); i++)
-        {
-            try 
-            {
-                JSONObject obj = response.getJSONObject("pippo");
-                SaleProperty property = new SaleProperty(obj);               
-                listProp.add(property);
-            } 
-            catch (JSONException e)
-            {               
-            } 
-        }
+		JSONObject obj2;
+		JSONArray objArray=null;
+		
+		try 
+		{
+			obj2 = response.getJSONObject("result");
+			JSONObject obj3=obj2.getJSONObject("results");
+			objArray=obj3.getJSONArray("ads");
+		} 
+		catch (JSONException e1) {
+		}		
+		
+		if(objArray!=null)
+		{		
+	        for (int i = 0; i < objArray.length(); i++)
+	        {
+	            try 
+	            {               
+	            	JSONObject obj=objArray.getJSONObject(i);
+	                SaleProperty property = new SaleProperty(obj);               
+	                listProp.add(property);
+	            } 
+	            catch (JSONException e)
+	            {               
+	            } 
+	        }
+		}
         return listProp;
 	}
 

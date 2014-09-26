@@ -37,7 +37,8 @@ public class ListActivity extends Activity
 		if(extra!=null)
 		{
 			properties=(ArrayList<SaleProperty>) extra.get(BUNDLE_EXTRA_PROPERTIES);	
-			adapter=new ListPropertiesAdapter(this, properties);
+			if(properties!=null)
+				adapter=new ListPropertiesAdapter(this, properties);
 		}		
 		setContentView(R.layout.activity_listview);
 		if(adapter!=null)

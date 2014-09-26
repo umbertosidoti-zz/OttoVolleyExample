@@ -25,8 +25,8 @@ public class SaleProperty implements Serializable
 	 */
 	public SaleProperty(JSONObject obj) throws JSONException
 	{
-		address=obj.getString("title");
-		urlThumb=obj.getString("image");		
+		address=obj.getString("full_address");
+		urlThumb=obj.getString("small_thumbnail_url");		
 	}
 	public String getUrlThumb() 
 	{
