@@ -20,8 +20,7 @@ public class MainActivity extends BaseBusActivity
 
 	private RetainFragmentDownloader fragmentDownloader;
 	public static final String TAG_DOWNLOADER="FragmentDownloaderTag";
-	private static final String URL_DEMO="https://api.daft.com/v2/json/search_sale?";
-	private static final String KEY="261cb47575e84ab5d29356ad2818ac21a20b1f4f";
+	private static final String URL_DEMO="https://api.daft.com/v2/json/search_sale?parameters={\"api_key\":\"261cb47575e84ab5d29356ad2818ac21a20b1f4f\",\"query\":{\"perpage\":50}}";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,7 +38,7 @@ public class MainActivity extends BaseBusActivity
 			{
 				if((fragmentDownloader!=null)&&(fragmentDownloader.getState()==RetainFragmentDownloader.STATE_INIT))
 				{
-					fragmentDownloader.downloadJsonObject(KEY, URL_DEMO);
+					fragmentDownloader.downloadJsonObject(URL_DEMO);
 				}
 			}
 		});		

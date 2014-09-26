@@ -40,25 +40,16 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	}
 
 	@Override
-	public void downloadJsonObject(String key, String url) 
+	public void downloadJsonObject(String url) 
 	{
 		state=STATE_PROGRESS;
-		downloadJsonData(key,url);
+		downloadJsonData(url);
 	}	
 	
 	
-	private void downloadJsonData(String key,String url)
-	{
-		JSONObject obj = new JSONObject();
-		try 
-		{
-			obj.put("api_key",key);
-			obj.put("query","{\"perpage\":50}");			
-		} catch (JSONException e) {
-		}
-		
-		
-		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,"https://api.daft.com/v2/json/search_sale?parameters={\"api_key\":\"261cb47575e84ab5d29356ad2818ac21a20b1f4f\",\"query\":{\"perpage\":50}}",null,
+	private void downloadJsonData(String url)
+	{			
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,null,
 		    new Response.Listener<JSONObject>() {
 		        @Override
 		        public void onResponse(JSONObject response)
@@ -73,6 +64,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		        	finishedWithError();   
 		        }
 		    });		
+		
         VolleyManagerSingletone.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsObjRequest,VolleyManagerSingletone.TAG);
 		
 	}
