@@ -20,16 +20,16 @@ public abstract class RetainFragmentDownloader extends Fragment
 	public static final int STATE_DELIVERED=3;
 	
 	protected int state;
-	private IFragmentListener mCallbacks;
+	//private IFragmentListener mCallbacks;
 
-	public abstract void downloadJsonObject(String url);
+	public abstract void downloadJsonObject(String url, String key);
 
 		
 	@Override
 	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
-		mCallbacks = (IFragmentListener) activity;
+		//mCallbacks = (IFragmentListener) activity;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public abstract class RetainFragmentDownloader extends Fragment
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mCallbacks = null;
+		//mCallbacks = null;
 	}
 	
 	

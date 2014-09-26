@@ -10,9 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.app.Activity;
 import it.umberto.daftvolleyotto.business.FragmentDownloaderResult;
@@ -38,40 +40,40 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	}
 
 	@Override
-	public void downloadJsonObject(String url) 
+	public void downloadJsonObject(String key, String url) 
 	{
 		state=STATE_PROGRESS;
-		downloadJsonData(url);
+		downloadJsonData(key,url);
 	}	
 	
 	
-	private void downloadJsonData(String url)
+	private void downloadJsonData(String key,String url)
 	{
-		// Creating volley request obj
-				
+		JSONObject obj = new JSONObject();
+		try 
+		{
+			obj.put("api_key",key);
+			obj.put("query","{\"perpage\":50}");			
+		} catch (JSONException e) {
+		}
 		
-        JsonArrayRequest movieReq = new JsonArrayRequest
-        (
-        		url,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response) 
-                    {                       	
-                    	properties=parseJsonArray(response);                       
-                        dowloadFinished();
-                    }
-                }, 
-                new Response.ErrorListener() 
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) 
-                    {
-                       finishedWithError(); 
-                    }
-                }
-        );       
-        VolleyManagerSingletone.getInstance(getActivity().getApplicationContext()).addToRequestQueue(movieReq,VolleyManagerSingletone.TAG);
+		
+		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,"https://api.daft.com/v2/json/search_sale?parameters={\"api_key\":\"261cb47575e84ab5d29356ad2818ac21a20b1f4f\",\"query\":{\"perpage\":50}}",null,
+		    new Response.Listener<JSONObject>() {
+		        @Override
+		        public void onResponse(JSONObject response)
+		        {
+		        	parseJsonObject(response);
+		        }
+		    },
+		    new Response.ErrorListener() {
+		        @Override
+		        public void onErrorResponse(VolleyError error)
+		        {
+		        	finishedWithError();   
+		        }
+		    });		
+        VolleyManagerSingletone.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsObjRequest,VolleyManagerSingletone.TAG);
 		
 	}
 	
@@ -79,7 +81,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	 * @param response
 	 * @return
 	 */
-	protected ArrayList<SaleProperty> parseJsonArray(JSONArray response) 	
+	protected ArrayList<SaleProperty> parseJsonObject(JSONObject response) 	
 	{
 		ArrayList<SaleProperty> listProp = new ArrayList<SaleProperty>();
 		
@@ -87,7 +89,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
         {
             try 
             {
-                JSONObject obj = response.getJSONObject(i);
+                JSONObject obj = response.getJSONObject("pippo");
                 SaleProperty property = new SaleProperty(obj);               
                 listProp.add(property);
             } 
