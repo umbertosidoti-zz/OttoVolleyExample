@@ -79,7 +79,8 @@ public class ListPropertiesAdapter extends BaseAdapter {
 	            imageLoader = VolleyManagerSingletone.getInstance(activity.getApplicationContext()).getImageLoader();
 	       	      
 	        SaleProperty m = movieItems.get(position);	 
-	        holder.thumb.setImageUrl(m.getUrlThumb(), imageLoader);       
+	        holder.thumb.setImageUrl(m.getUrlThumb(), imageLoader);  
+	        holder.thumb.setDefaultImageResId(R.drawable.load_image);
 	        holder.address.setText(m.getAddress());     	       
 	 
 	        return convertView;
