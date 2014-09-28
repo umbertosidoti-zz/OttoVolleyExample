@@ -2,9 +2,8 @@
 <resources>
 
     <string name="app_name">DaftVolleyOtto</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="force_button">FORCE</string>
-    <string name="cache_button">SHOW_CACHED</string>  
+    <string name="force_button">FORCE HTTP_CALL</string>
+    <string name="cache_button">SHOW CACHED</string>  
     <color name="list_divider">#d9d9d9</color>
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
@@ -12,7 +11,7 @@
     <color name="list_row_hover_end_color">#ebeef0</color>
     <color name="StartColor_button">#FD974E</color>
     <color name="EndColor_button">#FF800B</color>    
-   	<color name="BackActivity">#F6F6F6</color> 
+   	<color name="BackActivity">#F0F0F2</color> 
    	<color name="BlueBase">#193276</color>   
     <dimen name="title">17dp</dimen>
 </resources>

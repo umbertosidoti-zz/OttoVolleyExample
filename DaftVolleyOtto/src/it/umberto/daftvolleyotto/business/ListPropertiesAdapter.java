@@ -28,10 +28,15 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class ListPropertiesAdapter extends BaseAdapter {
 	    private Activity activity;
-	    private LayoutInflater inflater;
 	    private List<SaleProperty> movieItems;
 	    private ImageLoader imageLoader;
 	 
+	    static class ViewHolder
+	    {
+	    	TextView address;
+	    	NetworkImageView thumb;
+	    }
+	    
 	    public ListPropertiesAdapter(Activity activity, List<SaleProperty> movieItems) 
 	    {
 	    	imageLoader = VolleyManagerSingletone.getInstance(activity.getApplicationContext()).getImageLoader();
@@ -56,24 +61,26 @@ public class ListPropertiesAdapter extends BaseAdapter {
 	 
 	    @Override
 	    public View getView(int position, View convertView, ViewGroup parent)
-	    {
-	 
-	        if (inflater == null)
-	            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    {	 
+	        
 	        if (convertView == null)
-	            convertView = inflater.inflate(R.layout.list_row, null);
+	        {
+	        	LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	 	        ViewHolder viewH= new ViewHolder();	        	
+	        	convertView = inflater.inflate(R.layout.list_row, null);
+	        	viewH.thumb = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+	        	viewH.address = (TextView) convertView.findViewById(R.id.address);	
+	        	convertView.setTag(viewH);
+	        }
 	 
+	        ViewHolder holder = (ViewHolder) convertView.getTag();
+	        
 	        if (imageLoader == null)
 	            imageLoader = VolleyManagerSingletone.getInstance(activity.getApplicationContext()).getImageLoader();
-	       
-	        NetworkImageView thumbNail = (NetworkImageView) convertView
-	                .findViewById(R.id.thumbnail);
-	        TextView address = (TextView) convertView.findViewById(R.id.address);	       
-	 
-	        // getting movie data for the row
+	       	      
 	        SaleProperty m = movieItems.get(position);	 
-	        thumbNail.setImageUrl(m.getUrlThumb(), imageLoader);       
-	        address.setText(m.getAddress());     	       
+	        holder.thumb.setImageUrl(m.getUrlThumb(), imageLoader);       
+	        holder.address.setText(m.getAddress());     	       
 	 
 	        return convertView;
 	    }

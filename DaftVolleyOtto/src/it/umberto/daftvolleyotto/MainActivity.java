@@ -21,9 +21,9 @@ public class MainActivity extends BaseBusActivity implements OnCancelListener
 
 	private RetainFragmentDownloader fragmentDownloader;
 	public static final String TAG_DOWNLOADER="FragmentDownloaderTag";
-	public static final String SHOWING_DIALOG="SHOW_DIALOG";
+	
 	private static final String URL_DEMO="https://api.daft.com/v2/json/search_sale?parameters={\"api_key\":\"261cb47575e84ab5d29356ad2818ac21a20b1f4f\",\"query\":{\"perpage\":50}}";
-	private ProgressDialog dialog;
+	private DialogManager dialogManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -41,8 +41,8 @@ public class MainActivity extends BaseBusActivity implements OnCancelListener
 			{
 				if(fragmentDownloader!=null)
 				{
-					showDialog();
-					fragmentDownloader.forceDownloadJson(URL_DEMO);
+					int state=fragmentDownloader.forceDownloadJson(URL_DEMO);
+					dialogManager.changeState(state);
 				}
 			}
 		});		
@@ -54,12 +54,14 @@ public class MainActivity extends BaseBusActivity implements OnCancelListener
 			public void onClick(View arg0) 
 			{
 				if(fragmentDownloader!=null)
-				{
-					showDialog();
-					fragmentDownloader.downloadJson(URL_DEMO);
+				{					
+					int state=fragmentDownloader.downloadJson(URL_DEMO);
+					dialogManager.changeState(state);
 				}
 			}
-		});		
+		});				
+		
+		dialogManager= new DialogManager(this, this);
 		
 		FragmentManager fm = getFragmentManager();
 		fragmentDownloader = (RetainFragmentDownloader) fm.findFragmentByTag(TAG_DOWNLOADER);
@@ -75,35 +77,29 @@ public class MainActivity extends BaseBusActivity implements OnCancelListener
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
 	{
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-		if((dialog!=null)&&(dialog.isShowing()))
-		{
-			outState.putBoolean(SHOWING_DIALOG,true);
-			dismissDialog();
-		}
+		super.onSaveInstanceState(outState);		
+		dialogManager.onSaveInstanceState(outState);	
 	}
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub
-		super.onRestoreInstanceState(savedInstanceState);
-		boolean showdialog = savedInstanceState.getBoolean(SHOWING_DIALOG, false);
-		if(showdialog)
-			showDialog();		
+		super.onRestoreInstanceState(savedInstanceState);		
+		dialogManager.onRestoreInstanceState(savedInstanceState);		
 	}
 
 	@Subscribe
 	public void onDownloaderDataReceived(FragmentDownloaderResult event)
 	{
-		dismissDialog();
-		
+				
 		FragmentManager fm = getFragmentManager();
 		fragmentDownloader = (RetainFragmentDownloader) fm.findFragmentByTag(TAG_DOWNLOADER);
 
-		if (fragmentDownloader == null) 
-			fragmentDownloader.setState(FragmentDownloader.STATE_DELIVERED);		
+		if (fragmentDownloader != null) 
+		{
+			int state =fragmentDownloader.onDataDelivered();
+			dialogManager.changeState(state);		
+		}
 		
 		if(event.getResult()==FragmentDownloaderResult.RESULT_OK)
 		{
@@ -113,17 +109,7 @@ public class MainActivity extends BaseBusActivity implements OnCancelListener
 		}		
 	}
 	
-	private void dismissDialog()
-	{
-		if((dialog!=null)&&(dialog.isShowing()))
-				dialog.dismiss();
-	}
 	
-	private void showDialog()
-	{
-		dialog=DialogManager.createDialog(this,this);
-		dialog.show();
-	}
 
 	@Override
 	public void onCancel(DialogInterface dialog) 

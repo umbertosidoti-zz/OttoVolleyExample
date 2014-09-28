@@ -23,8 +23,7 @@ public class ListActivity extends Activity
 {
 	
 	public static final String BUNDLE_EXTRA_PROPERTIES="properties";	
-	private ArrayList<SaleProperty> properties ;
-	
+	private ArrayList<SaleProperty> properties;	
 	private ListPropertiesAdapter adapter;
 	
 	

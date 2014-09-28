@@ -3,6 +3,7 @@
  */
 package it.umberto.daftvolleyotto.business;
 
+import it.umberto.daftvolleyotto.FragmentDownloader;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -14,13 +15,11 @@ import android.os.Bundle;
  */
 public abstract class RetainFragmentDownloader extends Fragment
 {
-	
-	
 	protected int state;
 	//private IFragmentListener mCallbacks;
 
-	public abstract void forceDownloadJson(String url);
-	public abstract void downloadJson(String url);
+	public abstract int forceDownloadJson(String url);
+	public abstract int downloadJson(String url);
 
 		
 	@Override
@@ -56,6 +55,11 @@ public abstract class RetainFragmentDownloader extends Fragment
 
 	public void setState(int state) {
 		this.state = state;
+	}
+	public int onDataDelivered()
+	{
+		state =FragmentDownloader.STATE_DELIVERED;
+		return state;
 	}
 	
 	

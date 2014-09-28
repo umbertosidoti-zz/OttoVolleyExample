@@ -50,14 +50,15 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	}
 
 	@Override
-	public void forceDownloadJson(String url) 
+	public int forceDownloadJson(String url) 
 	{
 		state=STATE_PROGRESS;
 		downloadJsonData(url);
+		return state;
 	}	
 	
 	@Override
-	public void downloadJson(String url)
+	public int downloadJson(String url)
 	{
 		state=STATE_PROGRESS;
 		if(properties!=null)
@@ -70,6 +71,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		{
 			downloadJsonData(url);
 		}
+		return state;
 	}
 	
 	
@@ -81,7 +83,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		        public void onResponse(JSONObject response)
 		        {
 		        	properties=parseJsonObject(response);
-		        	dowloadFinished();
+		        	downloadFinished();
 		        	
 		        }
 		    },
@@ -114,7 +116,8 @@ public class FragmentDownloader extends RetainFragmentDownloader
 			JSONObject obj3=obj2.getJSONObject("results");
 			objArray=obj3.getJSONArray("ads");
 		} 
-		catch (JSONException e1) {
+		catch (JSONException e1) 
+		{
 		}		
 		
 		if(objArray!=null)
@@ -145,7 +148,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		SingletoneBus.getInstance().post(resultObj);
 	}
 
-	private void dowloadFinished()
+	private void downloadFinished()
 	{
 		state=STATE_FINSHED;
 		FragmentDownloaderResult resultObj = new FragmentDownloaderResult(properties);
