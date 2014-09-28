@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import it.umberto.daftvolleyotto.business.FragmentDownloaderResult;
+import it.umberto.daftvolleyotto.business.ParserDaftJson;
 import it.umberto.daftvolleyotto.business.RetainFragmentDownloader;
 import it.umberto.daftvolleyotto.business.SaleProperty;
 import it.umberto.daftvolleyotto.business.SingletoneBus;
@@ -82,7 +83,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		        @Override
 		        public void onResponse(JSONObject response)
 		        {
-		        	properties=parseJsonObject(response);
+		        	properties=ParserDaftJson.jsonToArrayProperties(response);
 		        	downloadFinished();
 		        	
 		        }
@@ -99,46 +100,7 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		
 	}
 	
-	/**
-	 * @param response
-	 * @return
-	 */
-	protected ArrayList<SaleProperty> parseJsonObject(JSONObject response) 	
-	{
-		ArrayList<SaleProperty> listProp = new ArrayList<SaleProperty>();
-		
-		JSONObject obj2;
-		JSONArray objArray=null;
-		
-		try 
-		{
-			obj2 = response.getJSONObject("result");
-			JSONObject obj3=obj2.getJSONObject("results");
-			objArray=obj3.getJSONArray("ads");
-		} 
-		catch (JSONException e1) 
-		{
-		}		
-		
-		if(objArray!=null)
-		{		
-	        for (int i = 0; i < objArray.length(); i++)
-	        {
-	            try 
-	            {               
-	            	JSONObject obj=objArray.getJSONObject(i);
-	                SaleProperty property = new SaleProperty(obj);               
-	                listProp.add(property);
-	            } 
-	            catch (JSONException e)
-	            {               
-	            } 
-	        }
-		}
-        return listProp;
-	}
-
-	/**
+	/*
 	 * 
 	 */
 	protected void finishedWithError() 
