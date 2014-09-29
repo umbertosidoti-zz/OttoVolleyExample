@@ -45,7 +45,6 @@ public class FragmentDownloader extends RetainFragmentDownloader
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub
 		state=STATE_INIT;
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -100,9 +99,6 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		
 	}
 	
-	/*
-	 * 
-	 */
 	protected void finishedWithError() 
 	{
 		FragmentDownloaderResult resultObj = new FragmentDownloaderResult(properties);
@@ -123,6 +119,13 @@ public class FragmentDownloader extends RetainFragmentDownloader
 		super.onDestroy();
 		VolleyManagerSingletone.getInstance(getActivity().getApplicationContext()).cancelPendingRequests(VolleyManagerSingletone.TAG);
 		
+	}
+
+	@Override
+	public int onDataDelivered()
+	{
+		state =STATE_DELIVERED;
+		return state;
 	}
 
 	
